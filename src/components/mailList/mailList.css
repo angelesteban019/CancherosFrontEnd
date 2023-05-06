@@ -20,7 +20,8 @@ border-radius: 5px;
 }
 
 .mailInputContainer>button{
-    height: 50px;
+    height: 35px;
+    margin: 10px;
     background-color: #97d362;
     color: #ffffff;
     font-weight: 500;

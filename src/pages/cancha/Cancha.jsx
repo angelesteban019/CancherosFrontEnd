@@ -1,36 +1,66 @@
 import "./cancha.css"
 import Navbar from "../../components/navbar/Navbar"
 import Header from "../../components/header/Header"
+import MailList from "../../components/mailList/MailList"
+import Footer from "../../components/footer/Footer"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { faCircleArrowLeft, faCircleArrowRight, faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import {useState} from "react";
 
 const Cancha = () => {
+    const [slideNumber, setSlideNumber, newSlideNumber] = useState (0);
+    const [open, setOpen] = useState (false);
     const photos = [
     {
-        src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSiOhPfbXJ2lX-e70UN_csCYlGkM-zAnLp5A&usqp=CAU"
+        src: "https://res.cloudinary.com/dwbhahrsr/image/upload/v1683236180/logo_orquesta_de_salsa_retro_amarillo_y_negro_1_qjpwuz.png"
     }, 
     {
-        src:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSiOhPfbXJ2lX-e70UN_csCYlGkM-zAnLp5A&usqp=CAU"
+        src:"https://res.cloudinary.com/dwbhahrsr/image/upload/v1675708327/samples/people/persona_hhcnmi.png"
     }, 
     {
-        src:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSiOhPfbXJ2lX-e70UN_csCYlGkM-zAnLp5A&usqp=CAU"
+        src:"https://res.cloudinary.com/dwbhahrsr/image/upload/v1683236180/logo_orquesta_de_salsa_retro_amarillo_y_negro_1_qjpwuz.png"
     }, 
     {
-        src:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSiOhPfbXJ2lX-e70UN_csCYlGkM-zAnLp5A&usqp=CAU"
+        src:"https://res.cloudinary.com/dwbhahrsr/image/upload/v1675708327/samples/people/persona_hhcnmi.png"
     }, 
     {
-        src:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSiOhPfbXJ2lX-e70UN_csCYlGkM-zAnLp5A&usqp=CAU"
+        src:"https://res.cloudinary.com/dwbhahrsr/image/upload/v1683236180/logo_orquesta_de_salsa_retro_amarillo_y_negro_1_qjpwuz.png"
     }, 
     {
-        src:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSiOhPfbXJ2lX-e70UN_csCYlGkM-zAnLp5A&usqp=CAU"
+        src:"https://res.cloudinary.com/dwbhahrsr/image/upload/v1675708327/samples/people/persona_hhcnmi.png"
     }, 
    
     ];
+
+    const handleOpen = (i) =>{
+        setSlideNumber(i);
+        setOpen(true);
+    };
+    const handleMove = (direction)=>{
+        
+        let  newSlideNumber;
+
+        if(direction==="l"){
+            newSlideNumber = slideNumber === 0 ? 5 : slideNumber-1;
+        } else{
+            newSlideNumber = slideNumber == 5 ? 0 : slideNumber +1;
+        }
+        setSlideNumber(newSlideNumber)
+    };
     return (
         <div>
             <Navbar/>
             <Header type="list"/>
             <div className="canchaContainer">
+                {open && <div className="slider">
+                    <FontAwesomeIcon icon={faCircleXmark} className="close" onClick={()=>setOpen(false)}/>
+                    <FontAwesomeIcon icon={faCircleArrowLeft} className="arrow" onClick={()=>handleMove("l")}/>
+                    <div className="sliderWrapper">
+                        <img src={photos[slideNumber].src}  alt="" className="sliderImg" />
+                    </div>
+                    <FontAwesomeIcon icon={faCircleArrowRight}className="arrow" onClick={()=>handleMove("r")}/>
+                </div>}
                 <div className="canchaWrapper">
                     <button className="reservaAhora">Reserve ahora!</button>
                     <h1 className="canchaTitle">Campnou</h1>
@@ -45,9 +75,9 @@ const Cancha = () => {
                         si alquila por más de 1 hora en esta cancha se le dara un descuento de un 5% en el proximo alquiler
                     </span>
                     <div className="canchaImages">
-                        {photos.map(photo=>(
+                        {photos.map((photo,i)=>(
                             <div className="canchaImgWrapper">
-                                <img src={photo.src} alt="" className="canchaImg" />
+                                <img onClick={()=>handleOpen(i)}src={photo.src} alt="" className="canchaImg" />
                             </div>
                         ))}
                     </div>
@@ -73,6 +103,8 @@ const Cancha = () => {
                             </div>
                         </div>
                     </div>
+                    <MailList/>
+                    <Footer/>
                 </div>
             </div>
     )

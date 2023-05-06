@@ -21,3 +21,8 @@
     color: #97d362;
     cursor: pointer;
 }
+
+.fText{
+    display: flex;
+    justify-content: center;
+}
